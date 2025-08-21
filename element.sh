@@ -11,14 +11,37 @@ GET_ELEMENT() {
   elif [[ $1 =~ ^[0-9]+$ ]]
   then
     echo Atomic number detected
+    # get number
+    NUMBER=$($PSQL "SELECT atomic_number FROM elements WHERE atomic_number = $1")
+    echo $NUMBER
+    # if not found
+    if [[ -z $NUMBER ]]
+    then 
+      echo not found
+    fi
   # if input is symbol
   elif [[ $1 =~ ^[A-Z]{1,2}$ ]]
   then
     echo Symbol detected
-  # if input is name
+    # get number
+    NUMBER=$($PSQL "SELECT atomic_number FROM elements WHERE symbol = '$1'")
+    echo $NUMBER
+    # if not found
+    if [[ -z $NUMBER ]]
+    then 
+      echo not found
+    fi
+  # if input is name or invalid input
   else
     echo echo Name detected
-  # if input is not valid
+    # get number
+    NUMBER=$($PSQL "SELECT atomic_number FROM elements WHERE name = '$1'")
+    echo $NUMBER
+    # if not found
+    if [[ -z $NUMBER ]]
+    then 
+      echo not found
+    fi
   fi
 }
 
