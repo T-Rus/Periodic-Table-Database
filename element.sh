@@ -14,7 +14,7 @@ GET_ELEMENT() {
     NUMBER=$($PSQL "SELECT atomic_number FROM elements WHERE atomic_number = $1")
     OUTPUT_INFO $NUMBER
   # if input is symbol
-  elif [[ $1 =~ ^[A-Z]{1,2}$ ]]
+  elif [[ $1 =~ ^[a-zA-Z]{1,2}$ ]]
   then
     # get number
     NUMBER=$($PSQL "SELECT atomic_number FROM elements WHERE symbol = '$1'")
