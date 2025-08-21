@@ -33,7 +33,7 @@ OUTPUT_INFO() {
     echo I could not find that element in the database.
   else
   # Find all information from atomic number as argument
-  ELEMENT=$($PSQL "SELECT name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements LEFT JOIN properties ON elements.atomic_number = properties.atomic_number WHERE elements.atomic_number = $NUMBER")
+  ELEMENT=$($PSQL "SELECT name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties ON elements.atomic_number = properties.atomic_number FULL JOIN types ON properties.type_id = types.type_id WHERE elements.atomic_number = $NUMBER")
   echo "$ELEMENT" | sed 's/|/ /g' | while read NAME SYMBOL TYPE ATOMIC_MASS MELTING_POINT BOILING_POINT
   do
     # Print output with info
